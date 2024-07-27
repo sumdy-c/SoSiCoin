@@ -11,7 +11,9 @@ class Balance extends MC {
         $("<span>").addClass("label").text("Balance:"),
         $.MC((state) => {
           const [ user ] = state;
-          
+          if(!user) {
+            return null;
+          }
           return $("<span>")
             .addClass("balance")
             .attr("id", "user-balance")
