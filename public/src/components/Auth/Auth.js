@@ -26,7 +26,7 @@ class Auth extends MC {
       const { user } = await data.json();
 
       if (!user) {
-        console.log("что-то странное");
+        return;
       }
 
       if (user === "invalidPass") {
