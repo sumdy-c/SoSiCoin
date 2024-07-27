@@ -8,14 +8,19 @@ class Auth {
     }
     
     async checkAuth(session) {
-        console.log(session);
         if(!session.user) {
             return 'unauth';
         }
+
+        const userCheck = await this.prisma.accountDibila.findUnique({
+            where: { userName: session.user.userName },
+        });
+
+        return userCheck;
     }
 
     async auth(name, pass) {
-        if(!this.prisma){
+        if(!this.prisma) {
             console.log('нет призмы');
             return;
         }
@@ -27,8 +32,28 @@ class Auth {
                 }
             });
 
+            if(!user) {
+                const regNewUser = await this.prisma.accountDibila.create({
+                    data: {
+                        coins: 0,
+                        password: pass,
+                        userName: name,
+                        damage: 1,
+                        achievements: ['hello'],
+                    }
+                });
+
+                return {
+                    type: 'newUser',
+                    data: regNewUser
+                };
+            }
+
             if(user.password === pass) {
-                return user;
+                return {
+                    type: 'oldUser',
+                    data: user
+                };
             } else {
                 return 'invalidPass';
             }

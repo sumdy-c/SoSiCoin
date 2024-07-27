@@ -28,3 +28,12 @@
     font-size: 16px;
     user-select: none;  
 }
+
+.header_logout {
+    cursor: pointer;
+}
+
+.header_logout:hover {
+    transition: 100ms;
+    transform: scale(1.10);
+}
