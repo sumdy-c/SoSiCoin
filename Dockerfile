@@ -2,9 +2,12 @@ FROM node:18-alpine3.18 as development
 
 WORKDIR /app
 
-COPY ./ /app/
+COPY package*.json ./
 
-RUN npm i
+RUN npm install
+
+COPY . .
+
 RUN npx prisma generate
 
 EXPOSE 3000
